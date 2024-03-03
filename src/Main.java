@@ -5,6 +5,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Main {
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Введите Ваше уравнение");
+        String primFirst = in.nextLine();
+        System.out.println(calc(primFirst));
+
+    }
     public static String calc(String input) {
         List<String> roman = getRomanNumbers();
         List<String> actions = getActions();
@@ -14,17 +22,12 @@ public class Main {
         Matcher matcher, matcher1;
         int indexOfAction = 0;
         String action = null;
-        String primFirst;
         boolean actionIsHere = false;
 
 
-        Scanner in = new Scanner(System.in);
-        System.out.println("Введите Ваше уравнение");
-        primFirst = in.nextLine();
-
         for (String c : actions) {
-            if (primFirst.contains(c)) {
-                indexOfAction = primFirst.indexOf(c);
+            if (input.contains(c)) {
+                indexOfAction = input.indexOf(c);
                 action = c;
                 actionIsHere = true;
             }
@@ -34,13 +37,13 @@ public class Main {
         }
 
         for (String s: roman) {
-            if (primFirst.contains(s)){
+            if (input.contains(s)){
                 isRoman = true;
             }
         }
 
-        String firstNumber = firstNumber(primFirst, indexOfAction);
-        String secondNumber = secondNumber(primFirst, indexOfAction);
+        String firstNumber = firstNumber(input, indexOfAction);
+        String secondNumber = secondNumber(input, indexOfAction);
 
         if (isRoman){
             matcher = PATTERN1.matcher(firstNumber);
@@ -59,7 +62,7 @@ public class Main {
                 throw new RuntimeException("Пример некорректно введен, должно быть введено в формате 'firstNumber+secondNumber' без пробелов и с числами от 0 до 10");
             }
         } else {
-            matcher = PATTERN.matcher(primFirst);
+            matcher = PATTERN.matcher(input);
             if (matcher.matches()) {
                 input = checkInput(firstNumber, secondNumber, action, isRoman);
             } else {
@@ -111,7 +114,7 @@ public class Main {
         }
 
         if (romanNumeral.length() > 0) {
-            throw new IllegalArgumentException(input + " cannot be converted to a Roman Numeral");
+            throw new IllegalArgumentException(input + " не может быть конвртировано в арабский");
         }
 
         return result;
