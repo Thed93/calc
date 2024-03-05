@@ -9,7 +9,6 @@ public class FirstNumber extends Number implements CreatingNumber {
             a.append(ch);
         }
         number.setNumber(a.toString());
-        number.checkRoman(number);
     }
 
 }

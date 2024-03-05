@@ -7,18 +7,16 @@ import java.util.regex.Pattern;
 public class Main {
 
     public static void main(String[] args) {
-        final Pattern PATTERN = Pattern.compile("([\\S]{1,2})([-+*/])([\\S]{1,2})");
         Scanner in = new Scanner(System.in);
+        final Pattern PATTERN1 = Pattern.compile("((\\S{1,4})([-+*/])(\\S{1,4}))");
         System.out.println("Введите Ваше уравнение");
-        String primFirst = in.nextLine();
-        Matcher matcher = PATTERN.matcher(primFirst);
+        String input = in.nextLine();
+        Matcher matcher = PATTERN1.matcher(input);
         if (matcher.matches()){
-            System.out.println(calc(primFirst));
-        }
-        else {
+            System.out.println(calc(input));
+        } else {
             throw new RuntimeException("Пример некорректно введен, должно быть введено в формате 'firstNumber+secondNumber' без пробелов и с числами от 0 до 10");
         }
-
     }
     public static String calc(String input) {
         List<String> actions = getActions();
@@ -34,6 +32,7 @@ public class Main {
                 indexOfAction = input.indexOf(c);
                 action = c;
                 actionIsHere = true;
+
             }
         }
         if (!actionIsHere){
@@ -44,18 +43,20 @@ public class Main {
         SecondNumber secondNumber = new SecondNumber();
         firstNumber.createNumber(input, indexOfAction, firstNumber);
         secondNumber.createNumber(input, indexOfAction, secondNumber);
+        firstNumber.checkRoman();
+        secondNumber.checkRoman();
 
-        if ((firstNumber.isRoman()) != (secondNumber.isRoman())){
+        if ((firstNumber.isNumberRoman()) != (secondNumber.isNumberRoman())){
             throw new RuntimeException("оба аргумента должны быть написаны или римскими, или арабскими цифрами");
         }
 
-        if (firstNumber.isRoman) {
+        if (firstNumber.isNumberRoman()) {
             firstNumber.romanToArabic();
             secondNumber.romanToArabic();
         }
         matcher = PATTERN.matcher(firstNumber.getNumber());
         matcher1 = PATTERN.matcher(firstNumber.getNumber());
-        if (matcher.matches() && matcher1.matches()){
+        if ((matcher.matches() && matcher1.matches())&&(firstNumber.convertToInteger()<=10)&&(secondNumber.convertToInteger()<=10)){
             input = checkInput(firstNumber, secondNumber, action);
         } else {
             throw new RuntimeException("Пример некорректно введен, должно быть введено в формате 'firstNumber+secondNumber' без пробелов и с числами от 0 до 10");
@@ -76,7 +77,7 @@ public class Main {
         Integer first = Integer.valueOf(firstNumber.getNumber());
         Integer second = Integer.valueOf(secondNumber.getNumber());
         Sum sum = getSum(action, first, second);
-        if (firstNumber.isRoman()){
+        if (firstNumber.isNumberRoman()){
             firstNumber.arabicToRoman();
             secondNumber.arabicToRoman();
             sum.arabicToRoman();

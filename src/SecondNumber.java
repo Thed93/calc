@@ -9,6 +9,5 @@ public class SecondNumber extends Number implements CreatingNumber {
             b.append(ch);
         }
         number.setNumber(b.toString());
-        number.checkRoman(number);
     }
 }
