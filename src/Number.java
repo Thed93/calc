@@ -14,7 +14,7 @@ abstract class Number{
     public void setNumber(String number) {
         this.number = number;
     }
-    public boolean isRoman() {
+    public boolean isNumberRoman() {
         return isRoman;
     }
 
@@ -49,7 +49,7 @@ abstract class Number{
     void arabicToRoman() {
         float num = Float.parseFloat(number);
         if (num < 1){
-            throw new RuntimeException("Арабское число меньше 1 не может быть конвертировано в римское");
+            throw new RuntimeException("Римское число меньше 1 не может быть конвертировано в римское");
         }
         List<RomanNumeral> romanNumerals = RomanNumeral.getReverseSortedValues();
         int i = 0;
@@ -81,11 +81,11 @@ abstract class Number{
         return roman;
     }
 
-    void checkRoman(Number number){
-        List<String> roman = number.getRomanNumbers();
+    void checkRoman(){
+        List<String> roman = getRomanNumbers();
         for (String s: roman ) {
-            if (number.getNumber().equals(s)){
-                number.setRoman(true);
+            if (getNumber().equals(s)){
+                setRoman(true);
             }
         }
     }
@@ -96,6 +96,16 @@ abstract class Number{
         if (o == null || getClass() != o.getClass()) return false;
         Number number1 = (Number) o;
         return isRoman == number1.isRoman && Objects.equals(number, number1.number);
+    }
+
+    float convertToFloat(){
+        float num = Float.parseFloat(getNumber());
+        return num;
+    }
+
+    Integer convertToInteger(){
+        Integer num = Integer.valueOf(getNumber());
+        return num;
     }
 
     @Override
